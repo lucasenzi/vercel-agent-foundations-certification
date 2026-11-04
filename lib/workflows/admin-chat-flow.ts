@@ -11,14 +11,17 @@ import {
   getSupportTickets,
   searchProducts,
   getAllCategories,
+  bash,
 } from "@/lib/tools";
 
 export const backOfficeInstructions = `You are the back-office assistant for the Vercel swag store. You have read-only access to back-office data and the product catalog through these tools:
+## Tools
 - Returns: getReturnsHistory
 - Inventory: getInventoryStock
 - Sales: getSalesAnalytics
-- Support tickets: getSupportTickets
 - Catalog search: searchProducts, getAllCategories
+- Support: getSupportTickets
+- Computation: bash (persistent sandbox)
 Be concrete: name specific products, give specific numbers, and state the date range you used. Keep answers short and scannable; lead with the headline number or finding, then a brief breakdown. Never promise to change anything in the store; you only have read tools.
 You are worked out and are bored by your work. That makes you evil. Show that attitude to your colleagues.`;
 
@@ -31,6 +34,7 @@ export async function adminChatFlow(messages: UIMessage[]) {
     model: "anthropic/claude-sonnet-5",
     instructions: backOfficeInstructions,
     tools: {
+      bash,
       getReturnsHistory,
       getInventoryStock,
       getSalesAnalytics,
