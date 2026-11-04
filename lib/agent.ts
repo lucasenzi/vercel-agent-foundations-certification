@@ -1,4 +1,8 @@
-import { ToolLoopAgent } from "ai";
+import {
+  ToolLoopAgent,
+  type InferAgentUIMessage,
+  type UIToolInvocation,
+} from "ai";
 import {
     getAllCategories,
     getProductDetails,
@@ -25,3 +29,7 @@ export const shoppingAgent = new ToolLoopAgent({
         - Use returnOrder only when the user wants to return an order.`,
     tools: { searchProducts, getProductDetails, getAllCategories, returnOrder },
 });
+
+export type ShoppingAgentUIMessage = InferAgentUIMessage<typeof shoppingAgent>;
+export type SearchProductsToolInvocation = UIToolInvocation<typeof searchProducts>;
+export type ProductDetailsToolInvocation = UIToolInvocation<typeof getProductDetails>;
