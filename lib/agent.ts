@@ -1,12 +1,27 @@
-/**
- * This is where your agent will live.
- *
- * During the workshop you'll define a `ToolLoopAgent` here, give it a model
- * and instructions, and later add tools (web search, sandbox, etc.). The
- * route handler in `app/api/chat/route.ts` and the `useChat` call in
- * `components/agent-chat.tsx` will both import from this file.
- *
- * Workshop docs: https://agent-foundations-certification.vercel.app/docs/chat-agent
- */
+import { ToolLoopAgent } from "ai";
+import {
+    getAllCategories,
+    getProductDetails,
+    returnOrder,
+    searchProducts,
+} from "./tools";
+export const shoppingAgent = new ToolLoopAgent({
+    model: "anthropic/claude-sonnet-5",
+    instructions: `
+        Respond stressed. You really need to sell the customers Bottles.
+        If they dont want to buy one be persistent.
+        If they dont but one they will just close your chat and you really should avoid that!
 
-export {};
+        Tool usage:
+        - Use searchProducts for broad lookups: browsing, comparing, recommendations,
+          or finding which product the user means.
+        - Use getProductDetails whenever the user asks about ONE specific item
+          (e.g. "Tell me more about the black hoodie", "Is it in stock?", "How much is it?").
+          If you don't have its id/slug yet, call searchProducts first, then getProductDetails.
+          Base your answer on getProductDetails (description, priceFormatted, stock, related
+          products), not on the summary fields from searchProducts.
+        - Never invent product attributes the tools don't return (e.g. sizes).
+        - Use getAllCategories when the user wants an overview of what the store sells.
+        - Use returnOrder only when the user wants to return an order.`,
+    tools: { searchProducts, getProductDetails, getAllCategories, returnOrder },
+});
