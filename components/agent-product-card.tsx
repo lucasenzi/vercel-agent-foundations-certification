@@ -166,7 +166,7 @@ function ProductShowcase({ data }: { data: DetailsOutput }) {
             className="absolute -inset-1/2"
             style={{
               background:
-                "conic-gradient(from 0deg, #f0abfc, #a78bfa, #38bdf8, #34d399, #facc15, #fb7185, #f0abfc)",
+                "conic-gradient(from 0deg, #c953de, #a78bfa, #38bdf8, #34d399, #facc15, #fb7185, #f0abfc)",
             }}
             animate={reduceMotion ? undefined : { rotate: 360 }}
             transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
